@@ -1,26 +1,4 @@
-# TMC created this script on 7/2/15
 # Purpose: Generate synthetic networks
-# Intention is to produce examples that demonstrate the advantages
-# of our approach (ATria) over others.
-# Thus, you can specify the number of social clubs you want,
-# minimum and maximum size, number of rival clubs you want,
-# number of common enemies you want, and the amount of noise.
-# At the moment noise just produces green edges, red edges are thus
-# assumed to be predefined.
-
-# Also specify the name.  The file created will appear in 
-# (name)/(name).gml.  We use GML so that it can be easily analyzed by Cytoscape.
-
-# Correlation Values for:
-# Nodes within a social club: [0.75 - 1)
-# Edges with a common enemy: (-1 - 0.75]
-# Nodes between rival clubs: [-0.5 - 0]
-# Noise: [0 - 0.5]
-
-# hubs and noise are percentages.
-# The amount of hub nodes will be equal to that percentage times the size of the largest club
-# The amount of noise will be equal to that percentage times the number of nodes (i.e. if the graph
-# has 100 nodes, there will be 50 edges that are random, with lower correlations [0 - 0.5]
 import numpy
 import math
 import random
@@ -35,25 +13,12 @@ class MakeSyntheticPlugin:
       self.numclouds = int(myfile.readline())
       self.minsize = int(myfile.readline())
       self.maxsize = int(myfile.readline())
-#print "Enter number of clouds (value minus 2 should be a multiple of 3):" 
-#self.numclouds = int(raw_input())
-#print "Enter output file (end in .gml):"
-#outfile = raw_input()
-#print "Enter minimum cloud size: "
-#self.minsize = int(raw_input())
-#print "Enter maximum cloud size: "
-#self.maxsize = int(raw_input())
-
-#self.numclouds = 11
-#self.maxsize = 20
-#self.minsize = 16
    def run(self):
 ####################################################
 # Determine the size of each club first.
       cloudsizes = numpy.zeros([self.numclouds])
       for i in range(self.numclouds):
          cloudsizes[i] = random.randint(self.minsize, self.maxsize)
-####################################################
 
 ####################################################
 # Now compute n, the total number of nodes
@@ -64,7 +29,7 @@ class MakeSyntheticPlugin:
 
 ####################################################
 # Obtain the correct number of nodes
-# Partition them into clubs, hubs and common enemies
+# Partition them into clouds
 # We can just do this linearly
 #
       nodes = range(0, self.n)
@@ -83,9 +48,8 @@ class MakeSyntheticPlugin:
 #
       self.ADJ = numpy.zeros([self.n, self.n])
 # Clouds, green edges
-   # For each cloud, place a random edges 0.75-1 between every pair
+   # For each cloud, place a random edges 0.85-1 between every pair
    # Give each other node in the club, relatively high magnitude edge
-   # All tertiary edges should be less than the others with the driver
       for j in range(0, self.numclouds):
         cloud = clouds[j]
         for node1 in cloud:
@@ -122,7 +86,6 @@ class MakeSyntheticPlugin:
          cloud1 = clouds[cloudnum]
          cloud2 = clouds[cloudnum+1]
          cloud3 = clouds[cloudnum+2]
-         print "Cloud 1: ", cloudnum, " Cloud2: " , cloudnum+1, " Cloud3: ", cloudnum+2
          randomcloud1 = cloud1[random.randint(0, len(cloud1)-1)]
          randomcloud21 = cloud2[random.randint(0, len(cloud2)-1)]
          while (randomcloud21 in randomcloudtwos):
