@@ -1,0 +1,2 @@
+Prefix plugins/MakeSynthetic/example/
+Plugin MakeSynthetic inputfile synthetic.txt outputfile synthetic.gml
