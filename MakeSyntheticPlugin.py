@@ -2,6 +2,7 @@
 import numpy
 import math
 import random
+random.seed(1234)  # ONLY FOR TESTING, COMMENT OUT FOR BETTER RANDOMNESS
 import sys
 ##############################
 # Parameters
