@@ -62,7 +62,7 @@ class MakeSyntheticPlugin:
 
 # Set up connections between clouds.
 # These will be a random positive weight from 0.75 to 1.
-      numsets = (self.numclouds - 2) / 3
+      numsets = int((self.numclouds - 2) / 3)
 # Don't use the same random node twice for the middle clouds.
       randomcloudtwos = []
 
