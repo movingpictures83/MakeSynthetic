@@ -2,7 +2,8 @@
 # Language: Python
 # Input: TXT (contains number of highly connected components, the min size of each, and the max size of each)
 # Output: GML (network with these properties, random weights) 
-# Tested with: PluMA 1.0, Python 3.6
+# Tested with: PluMA 1.1, Python 3.6
+# Dependency: numpy==1.16.0
 
 PluMA plugin to make a synthetic network.  These can be useful for testing algorithm functionality
 when real data is unavailable.  This plugin takes as input a text file with three integers on separate lines.
